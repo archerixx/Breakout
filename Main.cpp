@@ -20,7 +20,6 @@ void closeWindow();
 
 int main(int argc, char* args[])
 {
-
     startGame();
     return 0;
 }
@@ -115,6 +114,7 @@ void startGame()
 
         //Create Level 1
         BGame_Level_1_2* Level_1 = new BGame_Level_1_2;
+        Level_1->getBall()->setupBricks(lvl_2_state);
         if (lvl_1_state)
         {
             while (!quit)
@@ -154,7 +154,7 @@ void startGame()
                 }
 
                 //Level finished
-                if (Level_1->getBall()->getScore() == 20)
+                if (Level_1->getBall()->getScore() >= 10)
                 {
                     lvl_1_state = false;
                     lvl_2_state = true;
@@ -189,6 +189,7 @@ void startGame()
 
         //create Level 2
         BGame_Level_1_2* Level_2 = new BGame_Level_1_2;
+        Level_2->getBall()->setupBricks(lvl_2_state);
         //pass the previous score
         Level_2->getBall()->setScore(passTheScore);
         //pass lives that were left
@@ -250,7 +251,7 @@ void startGame()
                 }
 
                 //Level finished
-                if (Level_2->getBall()->getScore() == 1980)
+                if (Level_2->getBall()->getScore() >= 20)//1980)
                 {
                     lvl_2_state = false;
                     lvl_3_state = true;
@@ -318,16 +319,16 @@ void startGame()
                 //game start when mouse button is clicked
                 if (Level_3->getGameStart())
                 {
-                    Level_3->mainGameLoop(lvl_2_state);
+                    Level_3->mainGameLoop(lvl_3_state);
                 }
                 //wait for mouse click screen
                 else
                 {
-                    Level_3->standByLoop(lvl_2_state);
+                    Level_3->standByLoop(lvl_3_state);
                 }
 
                 //Level finished
-                if (Level_3->getBall()->getScore() == 3420)
+                if (Level_3->getBall()->getScore() >= 50)//3420)
                 {
                     lvl_3_state = false;
                     gameWon = true;
@@ -378,7 +379,7 @@ void startGame()
                 SDL_RenderClear(baseRenderer);
 
                 //Render background texture to screen
-                Level_3->getBall()->renderGameOverBackground();
+                Level_3->getBall()->renderGameWon();
                 Level_3->getBall()->getScoreTexture()->renderTexture(730, 530);
                 Level_3->getBall()->getLivesTexture()->renderTexture(50, 530);
 

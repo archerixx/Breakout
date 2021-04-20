@@ -142,7 +142,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Source.cpp" />
+    <ClCompile Include="Main.cpp" />
     <ClCompile Include="BTexture.cpp" />
     <ClCompile Include="BSound.cpp" />
     <ClCompile Include="BPlayerControl.cpp" />

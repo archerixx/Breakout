@@ -19,9 +19,9 @@ BBricks::BBricks()
         BrickImpenetrablePurple[i] = new BBrickType;
     }
 
-    BrickSoftYellow_Y_FromStart = 175;
-    BrickMediumBlue_Y_FromStart = 150;
-    BrickHardRed_Y_FromStart = 125;
+    BrickSoftYellow_Y_FromStart = 100;
+    BrickMediumBlue_Y_FromStart = 75;
+    BrickHardRed_Y_FromStart = 50;
     BrickImpenetrable_Y_FromStart = 125;
     BrickSoftYellow_Y_ToEnd = 225;
 
@@ -119,13 +119,13 @@ BLevelLayout* BBricks::getLevel_2()
 /*
     SETs
 */
-void BBricks::setYellowBrick(bool thridLevel, int columnCount, int rowSpacing)
+void BBricks::setYellowBrick(bool secondLevel, bool thridLevel, int columnCount, int rowSpacing)
 {
     int tempPosition = 0;
 
     for (int i = 0, j = getBricksWidthStart(); i < columnCount; i++, j += getBrickWidth() + rowSpacing)
     {
-        if (!thridLevel)
+        if (!thridLevel && !secondLevel)
         {
             //set bricks texture
             BrickSoftYellow[i]->setBrickTexturePath("Breakout_Media/Yellow_Brick.png");
@@ -147,12 +147,41 @@ void BBricks::setYellowBrick(bool thridLevel, int columnCount, int rowSpacing)
 
             BrickSoftYellow[i]->loadYellowBrickMedia(BrickSoftYellow[i]->getBrickTexturePath());
         }
-        else
+        else if (!thridLevel && secondLevel)
+        {
+            //set bricks texture
+            BrickSoftYellow[i]->setBrickTexturePath("Breakout_Media/Yellow_Brick.png");
+            //set brick Hit Points
+            BrickSoftYellow[i]->setHitPoints(1);
+            //set brick break gameScore
+            BrickSoftYellow[i]->setBreakScore(10);
+
+            //assign X and Y boarders of each bricks
+            //will be used later for ball/bricks collision detection
+            for (int x = j, p = 0; x <= j + getBrickWidth(); x += getBrickWidth(), p++)
+            {
+                BrickSoftYellow[i]->setBrickBoarderOn_X_Element(p, x);
+            }
+            for (int y = getGametableHeightStart() + BrickSoftYellow_Y_FromStart, p = 0; p <2; y += getBrickHeight(), p++)
+            {
+                if (i < 5 && p == 0)
+                    BrickSoftYellow_Y_FromStart += 25;
+                else if (i >= 5 && p == 0)
+                {
+                    BrickSoftYellow_Y_FromStart -= 25;
+                }
+
+                BrickSoftYellow[i]->setBrickBoarderOn_Y_Element(p, y);
+            }
+
+            BrickSoftYellow[i]->loadYellowBrickMedia(BrickSoftYellow[i]->getBrickTexturePath());
+        }
+        else if (thridLevel && !secondLevel)
         {
             //set bricks texture
             BrickSoftYellow[i]->setBrickTexturePath("Breakout_Media/Purple_Brick.png");
             //set brick Hit Points
-            BrickSoftYellow[i]->setHitPoints(1000);
+            BrickSoftYellow[i]->setHitPoints(10000);
             //set brick break gameScore
             BrickSoftYellow[i]->setBreakScore(0);
 
@@ -180,11 +209,6 @@ void BBricks::setYellowBrick(bool thridLevel, int columnCount, int rowSpacing)
                     BrickSoftYellow[i]->setBrickBoarderOn_Y_Element(p, y);
                 }
 
-                //if (i == 2)
-                //{
-                //    BrickSoftYellow[i]->setBrickBoarderOn_Y_Element(0, 648);
-                //    BrickSoftYellow[i]->setBrickBoarderOn_Y_Element(0, 648);
-                //}
             }
             else
             {
@@ -214,7 +238,7 @@ void BBricks::setYellowBrick(bool thridLevel, int columnCount, int rowSpacing)
 
     }
 }
-void BBricks::setBlueBrick(bool thridLevel, int columnCount, int rowSpacing)
+void BBricks::setBlueBrick(bool secondLevel, bool thridLevel, int columnCount, int rowSpacing)
 {
 
     for (int i = 0, j = getBricksWidthStart(); i < columnCount; i++, j += getBrickWidth() + rowSpacing)
@@ -228,7 +252,7 @@ void BBricks::setBlueBrick(bool thridLevel, int columnCount, int rowSpacing)
 
         //assign X and Y boarders of each bricks
         //will be used later for ball/bricks collision detection
-        if (!thridLevel)
+        if (!thridLevel && !secondLevel)
         {
             for (int x = j, p = 0; x <= j + getBrickWidth(); x += getBrickWidth(), p++)
             {
@@ -239,7 +263,25 @@ void BBricks::setBlueBrick(bool thridLevel, int columnCount, int rowSpacing)
                 BrickMediumBlue[i]->setBrickBoarderOn_Y_Element(p, y);
             }
         }
-        else
+        else if (!thridLevel && secondLevel)
+        {
+            for (int x = j, p = 0; x <= j + getBrickWidth(); x += getBrickWidth(), p++)
+            {
+                BrickMediumBlue[i]->setBrickBoarderOn_X_Element(p, x);
+            }
+            for (int y = getGametableHeightStart() + BrickMediumBlue_Y_FromStart, p = 0; p <2; y += getBrickHeight(), p++)
+            {
+                if (i < 5 && p == 0)
+                    BrickMediumBlue_Y_FromStart += 25;
+                else if (i >= 5 && p == 0)
+                {
+                    BrickMediumBlue_Y_FromStart -= 25;
+                }
+
+                BrickMediumBlue[i]->setBrickBoarderOn_Y_Element(p, y);
+            }
+        }
+        else if (thridLevel && !secondLevel)
         {
 
             if (i < 9)
@@ -292,7 +334,7 @@ void BBricks::setBlueBrick(bool thridLevel, int columnCount, int rowSpacing)
         BrickMediumBlue[i]->loadBlueBrickMedia(BrickMediumBlue[i]->getBrickTexturePath());
     }
 }
-void BBricks::setRedBrick(bool thridLevel, int columnCount, int rowSpacing)
+void BBricks::setRedBrick(bool secondLevel, bool thridLevel, int columnCount, int rowSpacing)
 {
     //
     for (int i = 0, j = getBricksWidthStart(); i < columnCount; i++, j += getBrickWidth() + rowSpacing)
@@ -306,7 +348,7 @@ void BBricks::setRedBrick(bool thridLevel, int columnCount, int rowSpacing)
 
         //assign X and Y boarders of each bricks
         //will be used later for ball/bricks collision detection
-        if (!thridLevel)
+        if (!thridLevel && !secondLevel)
         {
             for (int x = j, p = 0; x <= j + getBrickWidth(); x += getBrickWidth(), p++)
             {
@@ -317,7 +359,25 @@ void BBricks::setRedBrick(bool thridLevel, int columnCount, int rowSpacing)
                 BrickHardRed[i]->setBrickBoarderOn_Y_Element(p, y);
             }
         }
-        else
+        else if (!thridLevel && secondLevel)
+        {
+            for (int x = j, p = 0; x <= j + getBrickWidth(); x += getBrickWidth(), p++)
+            {
+                BrickHardRed[i]->setBrickBoarderOn_X_Element(p, x);
+            }
+            for (int y = getGametableHeightStart() + BrickHardRed_Y_FromStart, p = 0; p < 2; y += getBrickHeight(), p++)
+            {
+                if (i < 5 && p == 0)
+                    BrickHardRed_Y_FromStart += 25;
+                else if (i >= 5 && p == 0)
+                {
+                    BrickHardRed_Y_FromStart -= 25;
+                }
+
+                BrickHardRed[i]->setBrickBoarderOn_Y_Element(p, y);
+            }
+        }
+        else if (thridLevel && !secondLevel)
         {
 
             if (i < 9)

@@ -18,7 +18,7 @@ public:
     bool loadFromFile(const char* path);
 
     //Creates image from font string
-    bool loadFromRenderedText(const char* textureText, SDL_Color textColor);
+    bool loadFromRenderedText(const char* textureText, SDL_Color& textColor);
 
     //Renders texture at given point
     void renderTexture(int x, int y);

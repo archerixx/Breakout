@@ -16,8 +16,6 @@ BGame_Level_3::BGame_Level_3()
 
 BGame_Level_3::~BGame_Level_3()
 {
-    //gGame->~BGame();
-    //gPlayer->~BPlayerControl();
     //delete gGame_Level_3;
     delete gPlayer;
 }
@@ -44,7 +42,7 @@ void BGame_Level_3::updateLevel()
 void BGame_Level_3::mainGameLoop(bool levelState)
 {
     //Clear screen
-    //SDL_SetRenderDrawColor(baseRenderer, 255, 255, 255, 255);
+    SDL_SetRenderDrawColor(baseRenderer, 255, 255, 255, 255);
     SDL_RenderClear(baseRenderer);
 
     //Render background texture to screen
@@ -53,16 +51,10 @@ void BGame_Level_3::mainGameLoop(bool levelState)
     //render bricks from level
     for (int i = 0; i < gGame_Level_3->getBrickLevel_2()->getLevel_2()->getColumnCount(); i++)
     {
-        //gGame->getBrickLevel_2()->getImpenetrablePurpleBrick(i)->renderPurpleBrick(gGame->getBrickLevel_2()->getImpenetrablePurpleBrick(i)->getBrickBoarderOn_X_Element(0), gGame->getBrickLevel_2()->getImpenetrablePurpleBrick(i)->getBrickBoarderOn_Y_Element(0));
         gGame_Level_3->getBrickLevel_2()->getSoftYellowBrick(i)->renderYellowBrick(gGame_Level_3->getBrickLevel_2()->getSoftYellowBrick(i)->getBrickBoarderOn_X_Element(0), gGame_Level_3->getBrickLevel_2()->getSoftYellowBrick(i)->getBrickBoarderOn_Y_Element(0));
         gGame_Level_3->getBrickLevel_2()->getMediumBlueBrick(i)->renderBlueBrick(gGame_Level_3->getBrickLevel_2()->getMediumBlueBrick(i)->getBrickBoarderOn_X_Element(0), gGame_Level_3->getBrickLevel_2()->getMediumBlueBrick(i)->getBrickBoarderOn_Y_Element(0));
         gGame_Level_3->getBrickLevel_2()->getHardRedBrick(i)->renderRedBrick(gGame_Level_3->getBrickLevel_2()->getHardRedBrick(i)->getBrickBoarderOn_X_Element(0), gGame_Level_3->getBrickLevel_2()->getHardRedBrick(i)->getBrickBoarderOn_Y_Element(0));
     }
-    //for (int i = 0; i < 22; i++)
-   // {
-   //     gGame->getBrickLevel_2()->getImpenetrablePurpleBrick(i)->renderPurpleBrick(gGame->getBrickLevel_2()->getImpenetrablePurpleBrick(i)->getBrickBoarderOn_X_Element(0), gGame->getBrickLevel_2()->getImpenetrablePurpleBrick(i)->getBrickBoarderOn_Y_Element(0));
-   // }
-
 
     //keep previous score
     tempScore = gGame_Level_3->getScore();
@@ -152,6 +144,21 @@ void BGame_Level_3::gameOverLoop()
 
     //Update screen
     SDL_RenderPresent(baseRenderer);
+}
+
+int BGame_Level_3::getGameScorePosition_X() const
+{
+    return GAME_SCORE_POSITION_X;
+}
+
+int BGame_Level_3::getGameLivesPosition_X() const
+{
+    return GAME_LIVES_POSITION_X;
+}
+
+int BGame_Level_3::getScoreAndLivesPosition_Y() const
+{
+    return GAME_SCORE_AND_LIVES_POSITION_Y;
 }
 
 void BGame_Level_3::setGameStart(bool state)

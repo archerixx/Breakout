@@ -22,9 +22,9 @@ public:
 	BLevelLayout* getLevel_2();
 
 	//SET for Bricks
-	void setYellowBrick(bool thridLevel, int columnCount, int rowSpacing);
-	void setBlueBrick(bool thridLevel, int columnCount, int rowSpacing);
-	void setRedBrick(bool thridLevel, int columnCount, int rowSpacing);
+	void setYellowBrick(bool secondLevel, bool thridLevel, int columnCount, int rowSpacing);
+	void setBlueBrick(bool secondLevel, bool thridLevel, int columnCount, int rowSpacing);
+	void setRedBrick(bool secondLevel, bool thridLevel, int columnCount, int rowSpacing);
 	void setPurpleBrick();
 
 	//TODO - CHECK IF THERE ARE NEEDED
@@ -32,7 +32,6 @@ public:
 	void setBrickSoftYellow_Y_Start(int position_y);
 	void setBrickMediumBlue_Y_Start(int position_y);
 	void setBrickHardRed_Y_Start(int position_y);
-	void setBrickImpenetrablePurple_Y_Start(int position_y);
 
 private:
 	//Brick types

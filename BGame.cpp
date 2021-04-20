@@ -10,6 +10,7 @@ BGame::BGame()
 	baseBackgroundTexture = new BTexture;
 	gameOverBackground = new BTexture;
 	menuText = new BTexture;
+	gameWonBackground = new BTexture;
 	if (!loadBackgroundMedia(gBrick_Level_1->getLevel_1()->getBackGroundTexture()))
 	{
 		std::cout << "Failed to load base background media!";
@@ -35,11 +36,6 @@ BGame::BGame()
 		std::cout << "Failed to load Ball media!\n";
 	}
 
-	//setup bricks
-	gBrick_Level_1->setYellowBrick(false, gBrick_Level_1->getLevel_1()->getColumnCount(), gBrick_Level_1->getLevel_1()->getColumtSpacing());
-	gBrick_Level_1->setBlueBrick(false, gBrick_Level_1->getLevel_1()->getColumnCount(), gBrick_Level_1->getLevel_1()->getColumtSpacing());
-	gBrick_Level_1->setRedBrick(false, gBrick_Level_1->getLevel_1()->getColumnCount(), gBrick_Level_1->getLevel_1()->getColumtSpacing());
-
 	if (!gSound->loadMusicMedia())
 	{
 		std::cout << "Failed to load Sound!\n";
@@ -55,6 +51,7 @@ BGame::BGame(bool thirdLevel)
 	baseBackgroundTexture = new BTexture;
 	gameOverBackground = new BTexture;
 	menuText = new BTexture;
+	gameWonBackground = new BTexture;
 	if (!loadBackgroundMedia(getBrickLevel_2()->getLevel_2()->getBackGroundTexture()))
 	{
 		std::cout << "Failed to load base background media!";
@@ -81,9 +78,9 @@ BGame::BGame(bool thirdLevel)
 	}
 
 	//setup bricks
-	gBrick_Level_2->setYellowBrick(true, gBrick_Level_2->getLevel_2()->getColumnCount(), gBrick_Level_2->getLevel_2()->getColumtSpacing());
-	gBrick_Level_2->setBlueBrick(true, gBrick_Level_2->getLevel_2()->getColumnCount(), gBrick_Level_2->getLevel_2()->getColumtSpacing());
-	gBrick_Level_2->setRedBrick(true, gBrick_Level_2->getLevel_2()->getColumnCount(), gBrick_Level_2->getLevel_2()->getColumtSpacing());
+	gBrick_Level_2->setYellowBrick(false, true, gBrick_Level_2->getLevel_2()->getColumnCount(), gBrick_Level_2->getLevel_2()->getColumtSpacing());
+	gBrick_Level_2->setBlueBrick(false, true, gBrick_Level_2->getLevel_2()->getColumnCount(), gBrick_Level_2->getLevel_2()->getColumtSpacing());
+	gBrick_Level_2->setRedBrick(false, true, gBrick_Level_2->getLevel_2()->getColumnCount(), gBrick_Level_2->getLevel_2()->getColumtSpacing());
 
 	if (!gSound->loadMusicMedia())
 	{
@@ -124,6 +121,14 @@ BGame::~BGame()
 	}
 }
 
+void BGame::setupBricks(bool secondLevel)
+{
+	//setup bricks
+	gBrick_Level_1->setYellowBrick(secondLevel, false, gBrick_Level_1->getLevel_1()->getColumnCount(), gBrick_Level_1->getLevel_1()->getColumtSpacing());
+	gBrick_Level_1->setBlueBrick(secondLevel, false, gBrick_Level_1->getLevel_1()->getColumnCount(), gBrick_Level_1->getLevel_1()->getColumtSpacing());
+	gBrick_Level_1->setRedBrick(secondLevel, false, gBrick_Level_1->getLevel_1()->getColumnCount(), gBrick_Level_1->getLevel_1()->getColumtSpacing());
+}
+
 bool BGame::loadBackgroundMedia(const char* path)
 {
 	//Loading success flag
@@ -147,6 +152,12 @@ bool BGame::loadBackgroundMedia(const char* path)
 		std::cout << "\nFailed to load game over texture image!\n";
 		success = false;
 	}
+	//Load game won media
+	if (!gameWonBackground->loadFromFile("Breakout_Media/game_won_background.png"))
+	{
+		std::cout << "\nFailed to load game over texture image!\n";
+		success = false;
+	}
 
 	return success;
 }
@@ -162,10 +173,19 @@ void BGame::renderMenu(int x, int y)
 {
 	menuText->renderTexture(x, y);
 }
+void BGame::renderGameWon(int x, int y)
+{
+	gameWonBackground->renderTexture(x, y);
+}
 
 BSound* BGame::getSound()
 {
 	return gSound;
+}
+
+void BGame::setSecondLevelState(bool secondLevel)
+{
+	this->levelState_2 = secondLevel;
 }
 
 /*
@@ -406,7 +426,7 @@ void BGame::brickCollision(int size, BBricks* getBrickLevel)
 			if ((bBallPosition.x + BALL_SIZE) > getBrickLevel->getSoftYellowBrick(i)->getBrickBoarderOn_X_Element(0) &&
 				bBallPosition.x < getBrickLevel->getSoftYellowBrick(i)->getBrickBoarderOn_X_Element(1) &&
 				bBallPosition.y < getBrickLevel->getSoftYellowBrick(i)->getBrickBoarderOn_Y_Element(1) &&
-				bBallPosition.y >= (getBrickLevel->getSoftYellowBrick(i)->getBrickBoarderOn_Y_Element(1) - 2))
+				bBallPosition.y >= (getBrickLevel->getSoftYellowBrick(i)->getBrickBoarderOn_Y_Element(1) - 1))
 			{
 				//checks if ball hit brick from left
 				if (bBallPosition.x > bBallPreviousPosition.x)
@@ -431,8 +451,8 @@ void BGame::brickCollision(int size, BBricks* getBrickLevel)
 				//checks speed
 				if ((bBallPosition.x + BALL_SIZE) > getBrickLevel->getSoftYellowBrick(i)->getBrickBoarderOn_X_Element(0) &&
 					(bBallPosition.x + BALL_SIZE) <= (getBrickLevel->getSoftYellowBrick(i)->getBrickBoarderOn_X_Element(0) + 1) &&
-					bBallPosition.y < (getBrickLevel->getSoftYellowBrick(i)->getBrickBoarderOn_Y_Element(1) - 2) &&
-					(bBallPosition.y + BALL_SIZE) >(getBrickLevel->getSoftYellowBrick(i)->getBrickBoarderOn_Y_Element(0) + 2))
+					bBallPosition.y < (getBrickLevel->getSoftYellowBrick(i)->getBrickBoarderOn_Y_Element(1) - 1) &&
+					(bBallPosition.y + BALL_SIZE) >(getBrickLevel->getSoftYellowBrick(i)->getBrickBoarderOn_Y_Element(0) + 1))
 				{
 					//checks if ball came from above
 					if (bBallPosition.y > bBallPreviousPosition.y)
@@ -458,8 +478,8 @@ void BGame::brickCollision(int size, BBricks* getBrickLevel)
 				//check speed
 				if (bBallPosition.x < getBrickLevel->getSoftYellowBrick(i)->getBrickBoarderOn_X_Element(1) &&
 					bBallPosition.x >= (getBrickLevel->getSoftYellowBrick(i)->getBrickBoarderOn_X_Element(1) - 1) &&
-					bBallPosition.y < (getBrickLevel->getSoftYellowBrick(i)->getBrickBoarderOn_Y_Element(1) - 2) &&
-					(bBallPosition.y + BALL_SIZE) >(getBrickLevel->getSoftYellowBrick(i)->getBrickBoarderOn_Y_Element(0) + 2))
+					bBallPosition.y < (getBrickLevel->getSoftYellowBrick(i)->getBrickBoarderOn_Y_Element(1) - 1) &&
+					(bBallPosition.y + BALL_SIZE) >(getBrickLevel->getSoftYellowBrick(i)->getBrickBoarderOn_Y_Element(0) + 1))
 				{
 					//checks if ball came from above
 					if (bBallPosition.y > bBallPreviousPosition.y)
@@ -483,7 +503,7 @@ void BGame::brickCollision(int size, BBricks* getBrickLevel)
 			if ((bBallPosition.x + BALL_SIZE) > getBrickLevel->getSoftYellowBrick(i)->getBrickBoarderOn_X_Element(0) &&
 				bBallPosition.x < getBrickLevel->getSoftYellowBrick(i)->getBrickBoarderOn_X_Element(1) &&
 				(bBallPosition.y + BALL_SIZE) > getBrickLevel->getSoftYellowBrick(i)->getBrickBoarderOn_Y_Element(0) &&
-				(bBallPosition.y + BALL_SIZE) <= (getBrickLevel->getSoftYellowBrick(i)->getBrickBoarderOn_Y_Element(0) + 2))
+				(bBallPosition.y + BALL_SIZE) <= (getBrickLevel->getSoftYellowBrick(i)->getBrickBoarderOn_Y_Element(0) + 1))
 			{
 				//checks if ball hit brick from left
 				if (bBallPosition.x > bBallPreviousPosition.x)
@@ -512,7 +532,7 @@ void BGame::brickCollision(int size, BBricks* getBrickLevel)
 			if ((bBallPosition.x + BALL_SIZE) > getBrickLevel->getMediumBlueBrick(i)->getBrickBoarderOn_X_Element(0) &&
 				bBallPosition.x < getBrickLevel->getMediumBlueBrick(i)->getBrickBoarderOn_X_Element(1) &&
 				bBallPosition.y < getBrickLevel->getMediumBlueBrick(i)->getBrickBoarderOn_Y_Element(1) &&
-				bBallPosition.y >= (getBrickLevel->getMediumBlueBrick(i)->getBrickBoarderOn_Y_Element(1) - 2))
+				bBallPosition.y >= (getBrickLevel->getMediumBlueBrick(i)->getBrickBoarderOn_Y_Element(1) - 1))
 			{
 				//checks if ball hit brick from left
 				if (bBallPosition.x > bBallPreviousPosition.x)
@@ -536,7 +556,7 @@ void BGame::brickCollision(int size, BBricks* getBrickLevel)
 			{
 				//check speed
 				if ((bBallPosition.x + BALL_SIZE) > getBrickLevel->getMediumBlueBrick(i)->getBrickBoarderOn_X_Element(0) &&
-					(bBallPosition.x + BALL_SIZE) <= (getBrickLevel->getMediumBlueBrick(i)->getBrickBoarderOn_X_Element(0) + 2))
+					(bBallPosition.x + BALL_SIZE) <= (getBrickLevel->getMediumBlueBrick(i)->getBrickBoarderOn_X_Element(0) + 1))
 				{
 					//checks if ball came from above
 					if (bBallPosition.y > bBallPreviousPosition.y)
@@ -585,7 +605,7 @@ void BGame::brickCollision(int size, BBricks* getBrickLevel)
 			if ((bBallPosition.x + BALL_SIZE) > getBrickLevel->getMediumBlueBrick(i)->getBrickBoarderOn_X_Element(0) &&
 				bBallPosition.x < getBrickLevel->getMediumBlueBrick(i)->getBrickBoarderOn_X_Element(1) &&
 				(bBallPosition.y + BALL_SIZE) > getBrickLevel->getMediumBlueBrick(i)->getBrickBoarderOn_Y_Element(0) &&
-				(bBallPosition.y + BALL_SIZE) <= (getBrickLevel->getMediumBlueBrick(i)->getBrickBoarderOn_Y_Element(0) + 2))
+				(bBallPosition.y + BALL_SIZE) <= (getBrickLevel->getMediumBlueBrick(i)->getBrickBoarderOn_Y_Element(0) + 1))
 			{
 				//checks if ball hit brick from left
 				if (bBallPosition.x > bBallPreviousPosition.x)
@@ -614,7 +634,7 @@ void BGame::brickCollision(int size, BBricks* getBrickLevel)
 			if ((bBallPosition.x + BALL_SIZE) > getBrickLevel->getHardRedBrick(i)->getBrickBoarderOn_X_Element(0) &&
 				bBallPosition.x < getBrickLevel->getHardRedBrick(i)->getBrickBoarderOn_X_Element(1) &&
 				bBallPosition.y < getBrickLevel->getHardRedBrick(i)->getBrickBoarderOn_Y_Element(1) &&
-				bBallPosition.y >= (getBrickLevel->getHardRedBrick(i)->getBrickBoarderOn_Y_Element(1) - 2))
+				bBallPosition.y >= (getBrickLevel->getHardRedBrick(i)->getBrickBoarderOn_Y_Element(1) - 1))
 			{
 				//checks if ball hit brick from left
 				if (bBallPosition.x > bBallPreviousPosition.x)
@@ -687,7 +707,7 @@ void BGame::brickCollision(int size, BBricks* getBrickLevel)
 			if ((bBallPosition.x + BALL_SIZE) > getBrickLevel->getHardRedBrick(i)->getBrickBoarderOn_X_Element(0) &&
 				bBallPosition.x < getBrickLevel->getHardRedBrick(i)->getBrickBoarderOn_X_Element(1) &&
 				(bBallPosition.y + BALL_SIZE) > getBrickLevel->getHardRedBrick(i)->getBrickBoarderOn_Y_Element(0) &&
-				(bBallPosition.y + BALL_SIZE) <= (getBrickLevel->getHardRedBrick(i)->getBrickBoarderOn_Y_Element(0) + 2))
+				(bBallPosition.y + BALL_SIZE) <= (getBrickLevel->getHardRedBrick(i)->getBrickBoarderOn_Y_Element(0) + 1))
 			{
 				//checks if ball hit brick from left
 				if (bBallPosition.x > bBallPreviousPosition.x)

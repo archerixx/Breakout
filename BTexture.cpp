@@ -63,7 +63,7 @@ bool BTexture::loadFromFile(const char* path)
     return iTexture != NULL;
 }
 
-bool BTexture::loadFromRenderedText(const char* textureText, SDL_Color textColor)
+bool BTexture::loadFromRenderedText(const char* textureText, SDL_Color& textColor)
 {
     //Get rid of preexisting texture
     clearTexture();

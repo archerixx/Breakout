@@ -17,6 +17,10 @@ public:
     void standByLoop(bool levelState);
     void gameOverLoop();
 
+    int getGameScorePosition_X() const;
+    int getGameLivesPosition_X() const;
+    int getScoreAndLivesPosition_Y() const;
+
     void setGameStart(bool state);
     bool getGameStart();
 

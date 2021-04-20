@@ -15,6 +15,7 @@ public:
 	void renderBackground(int x = 0, int y = 0);
 	void renderGameOverBackground(int x = 0, int y = 0);
 	void renderMenu(int x = 210, int y = 0);
+	void renderGameWon(int x = 0, int y = 0);
 
 	//set ball position
 	void setBallPoint(int x, int y);
@@ -31,6 +32,10 @@ public:
 	BBricks* getBrickLevel_2();
 	//get BSound object
 	BSound* getSound();
+
+	//set second level state
+	void setSecondLevelState(bool secondLevel);
+	void setupBricks(bool secondLevel);
 
 	//responsible for ball movement, collision, brick destruction, gameScore and lives
 	void ballMovementAndCollision(int board_x, int board_y, bool levelState);
@@ -65,6 +70,7 @@ private:
 	//background texture
 	BTexture* baseBackgroundTexture;
 	BTexture* gameOverBackground;
+	BTexture* gameWonBackground;
 
 	//ball size
 	const int BALL_SIZE = 10;
@@ -93,6 +99,9 @@ private:
 	//classess used in this header
 	BBricks* gBrick_Level_1;
 	BSound* gSound;
+
+	//second level flag
+	bool levelState_2 = false;
 
 	//object for level 3
 	bool levelState_3 = false;

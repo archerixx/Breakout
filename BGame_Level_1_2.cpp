@@ -99,7 +99,7 @@ void BGame_Level_1_2::mainGameLoop(bool levelState)
 void BGame_Level_1_2::standByLoop()
 {
     //Clear screen
-    //SDL_SetRenderDrawColor(baseRenderer, 255, 255, 255, 255);
+    SDL_SetRenderDrawColor(baseRenderer, 255, 255, 255, 255);
     SDL_RenderClear(baseRenderer);
 
     //Render background texture to screen
