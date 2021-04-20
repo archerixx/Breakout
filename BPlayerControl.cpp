@@ -31,11 +31,6 @@ BPlayerControl::~BPlayerControl()
     }
 }
 
-void BPlayerControl::setBoardPosition(int x, int y)
-{
-    bBoardPosition.x = x;
-    bBoardPosition.y = y;
-}
 SDL_Point BPlayerControl::getBoardPosition()
 {
     return bBoardPosition;

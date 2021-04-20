@@ -23,6 +23,7 @@ BGame::BGame()
 	gameScore = 0;
 	brickHitCounter = 0;
 	lifeLost = false;
+	levelState_3 = false;
 
 	scoreTexture = new BTexture;
 	livesTexture = new BTexture;
@@ -64,6 +65,8 @@ BGame::BGame(bool thirdLevel)
 	gameScore = 0;
 	brickHitCounter = 0;
 	lifeLost = false;
+	levelState_2 = false;
+	levelState_3 = true;
 
 	scoreTexture = new BTexture;
 	livesTexture = new BTexture;
@@ -78,9 +81,9 @@ BGame::BGame(bool thirdLevel)
 	}
 
 	//setup bricks
-	gBrick_Level_2->setYellowBrick(false, true, gBrick_Level_2->getLevel_2()->getColumnCount(), gBrick_Level_2->getLevel_2()->getColumtSpacing());
-	gBrick_Level_2->setBlueBrick(false, true, gBrick_Level_2->getLevel_2()->getColumnCount(), gBrick_Level_2->getLevel_2()->getColumtSpacing());
-	gBrick_Level_2->setRedBrick(false, true, gBrick_Level_2->getLevel_2()->getColumnCount(), gBrick_Level_2->getLevel_2()->getColumtSpacing());
+	gBrick_Level_2->setYellowBrick(levelState_2, levelState_3, gBrick_Level_2->getLevel_2()->getColumnCount(), gBrick_Level_2->getLevel_2()->getBrickSpacing());
+	gBrick_Level_2->setBlueBrick(levelState_2, levelState_3, gBrick_Level_2->getLevel_2()->getColumnCount(), gBrick_Level_2->getLevel_2()->getBrickSpacing());
+	gBrick_Level_2->setRedBrick(levelState_2, levelState_3, gBrick_Level_2->getLevel_2()->getColumnCount(), gBrick_Level_2->getLevel_2()->getBrickSpacing());
 
 	if (!gSound->loadMusicMedia())
 	{
@@ -121,12 +124,12 @@ BGame::~BGame()
 	}
 }
 
-void BGame::setupBricks(bool secondLevel)
+void BGame::setupBricks(bool& secondLevel)
 {
 	//setup bricks
-	gBrick_Level_1->setYellowBrick(secondLevel, false, gBrick_Level_1->getLevel_1()->getColumnCount(), gBrick_Level_1->getLevel_1()->getColumtSpacing());
-	gBrick_Level_1->setBlueBrick(secondLevel, false, gBrick_Level_1->getLevel_1()->getColumnCount(), gBrick_Level_1->getLevel_1()->getColumtSpacing());
-	gBrick_Level_1->setRedBrick(secondLevel, false, gBrick_Level_1->getLevel_1()->getColumnCount(), gBrick_Level_1->getLevel_1()->getColumtSpacing());
+	gBrick_Level_1->setYellowBrick(secondLevel, levelState_3, gBrick_Level_1->getLevel_1()->getColumnCount(), gBrick_Level_1->getLevel_1()->getBrickSpacing());
+	gBrick_Level_1->setBlueBrick(secondLevel, levelState_3, gBrick_Level_1->getLevel_1()->getColumnCount(), gBrick_Level_1->getLevel_1()->getBrickSpacing());
+	gBrick_Level_1->setRedBrick(secondLevel, levelState_3, gBrick_Level_1->getLevel_1()->getColumnCount(), gBrick_Level_1->getLevel_1()->getBrickSpacing());
 }
 
 bool BGame::loadBackgroundMedia(const char* path)
@@ -182,16 +185,10 @@ BSound* BGame::getSound()
 {
 	return gSound;
 }
-
-void BGame::setSecondLevelState(bool secondLevel)
-{
-	this->levelState_2 = secondLevel;
-}
-
 /*
 	Ball setup
 */
-void BGame::setBallPoint(int x, int y)
+void BGame::setBallPoint(const int& x, const int& y)
 {
 	bBallPosition.x = x;
 	bBallPosition.y = y;
@@ -213,7 +210,7 @@ bool BGame::loadBallMedia()
 
 	return success;
 }
-void BGame::renderBall(int x, int y)
+void BGame::renderBall(const int& x, const int& y)
 {
 	ballTexture->renderTexture(x, y);
 }
@@ -227,7 +224,7 @@ BBricks* BGame::getBrickLevel_2()
 {
 	return gBrick_Level_2;
 }
-void BGame::ballMovementAndCollision(int board_x, int board_y, bool levelState)
+void BGame::ballMovementAndCollision(const int& board_x, const int& board_y, bool& levelState)
 {
 	//show/renderTexture ball
 	renderBall(bBallPosition.x, bBallPosition.y);
@@ -414,7 +411,7 @@ void BGame::stateReset()
 	onRightWallAbove = false;
 	onRightWallBelow = false;
 }
-void BGame::brickCollision(int size, BBricks* getBrickLevel)
+void BGame::brickCollision(const int& size, BBricks* getBrickLevel)
 {
 	for (int i = 0; i < size; i++)
 	{
@@ -734,7 +731,7 @@ void BGame::brickCollision(int size, BBricks* getBrickLevel)
 /*
 	Clear bricks from gametable and its texture
 */
-void BGame::removeYellowBricks(int index, BBricks* getBrickLevel)
+void BGame::removeYellowBricks(int& index, BBricks* getBrickLevel)
 {
 	Mix_PlayChannel(-1, gSound->gLow, 0);
 	getBrickLevel->getSoftYellowBrick(index)->setHitPoints(getBrickLevel->getSoftYellowBrick(index)->getHitPoints() - 1);
@@ -742,12 +739,14 @@ void BGame::removeYellowBricks(int index, BBricks* getBrickLevel)
 	{
 		//brickHitCounter++;
 		setScore(getBrickLevel->getSoftYellowBrick(index)->getBreakScore());
-		getBrickLevel->getSoftYellowBrick(index)->setBrickBoarderOn_Y_Element(0, 658);
-		getBrickLevel->getSoftYellowBrick(index)->setBrickBoarderOn_Y_Element(1, 0);
+		for (int p = 0; p < 2; p++)
+		{
+			getBrickLevel->getSoftYellowBrick(index)->setBrickBoarderOn_Y_Element(p, offMap);
+		}
 		getBrickLevel->getSoftYellowBrick(index)->clearYellowTexture();
 	}
 }
-void BGame::removeBlueBricks(int index, BBricks* getBrickLevel)
+void BGame::removeBlueBricks(int& index, BBricks* getBrickLevel)
 {
 	Mix_PlayChannel(-1, gSound->gLow, 0);
 	getBrickLevel->getMediumBlueBrick(index)->setHitPoints(getBrickLevel->getMediumBlueBrick(index)->getHitPoints() - 1);
@@ -755,12 +754,14 @@ void BGame::removeBlueBricks(int index, BBricks* getBrickLevel)
 	{
 		//brickHitCounter++;
 		setScore(getBrickLevel->getMediumBlueBrick(index)->getBreakScore());
-		getBrickLevel->getMediumBlueBrick(index)->setBrickBoarderOn_Y_Element(0, 658);
-		getBrickLevel->getMediumBlueBrick(index)->setBrickBoarderOn_Y_Element(1, 0);
+		for (int p = 0; p < 2; p++)
+		{
+			getBrickLevel->getMediumBlueBrick(index)->setBrickBoarderOn_Y_Element(p, offMap);
+		}
 		getBrickLevel->getMediumBlueBrick(index)->clearBlueTexture();
 	}
 }
-void BGame::removeRedBricks(int index, BBricks* getBrickLevel)
+void BGame::removeRedBricks(int& index, BBricks* getBrickLevel)
 {
 	Mix_PlayChannel(-1, gSound->gLow, 0);
 	getBrickLevel->getHardRedBrick(index)->setHitPoints(getBrickLevel->getHardRedBrick(index)->getHitPoints() - 1);
@@ -768,8 +769,10 @@ void BGame::removeRedBricks(int index, BBricks* getBrickLevel)
 	{
 		//brickHitCounter++;
 		setScore(getBrickLevel->getHardRedBrick(index)->getBreakScore());
-		getBrickLevel->getHardRedBrick(index)->setBrickBoarderOn_Y_Element(0, 658);
-		getBrickLevel->getHardRedBrick(index)->setBrickBoarderOn_Y_Element(1, 0);
+		for (int p = 0; p < 2; p++)
+		{
+			getBrickLevel->getHardRedBrick(index)->setBrickBoarderOn_Y_Element(p, offMap);
+		}
 		getBrickLevel->getHardRedBrick(index)->clearRedTexture();
 	}
 }
@@ -777,7 +780,7 @@ void BGame::removeRedBricks(int index, BBricks* getBrickLevel)
 /*
 	SETs/GETs
 */
-void BGame::setScore(int addScore)
+void BGame::setScore(const int& addScore)
 {
 	this->gameScore += addScore;
 }
@@ -809,7 +812,7 @@ BTexture* BGame::getLivesTexture()
 {
 	return livesTexture;
 }
-bool BGame::loadScoreAndLivesMedia(int gameScore, int livesLeft)
+bool BGame::loadScoreAndLivesMedia(const int& gameScore, const int& livesLeft)
 {
 	//Loading success flag
 	bool success = true;

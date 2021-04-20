@@ -10,9 +10,6 @@ public:
     //Destructor
     ~BPlayerControl();
 
-    //SET board start position 
-    void setBoardPosition(int x, int y);
-
     //GET current board position
     SDL_Point getBoardPosition();
 

@@ -97,7 +97,7 @@ bool BTexture::loadFromRenderedText(const char* textureText, SDL_Color& textColo
     return iTexture != NULL;
 }
 
-void BTexture::renderTexture(int x, int y)
+void BTexture::renderTexture(const int& x,const int& y)
 {
     //Set rendering space and renders texture to screen (x, y represent position and iWidth/iHeight size of texture)
     SDL_Rect renderQuad = { x, y, iWidth, iHeight };

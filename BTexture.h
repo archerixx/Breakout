@@ -21,7 +21,7 @@ public:
     bool loadFromRenderedText(const char* textureText, SDL_Color& textColor);
 
     //Renders texture at given point
-    void renderTexture(int x, int y);
+    void renderTexture(const int& x, const int& y);
 
 private:
     //The actual hardware texture

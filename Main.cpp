@@ -154,7 +154,7 @@ void startGame()
                 }
 
                 //Level finished
-                if (Level_1->getBall()->getScore() >= 10)
+                if (Level_1->getBall()->getScore() >= 50)
                 {
                     lvl_1_state = false;
                     lvl_2_state = true;
@@ -251,7 +251,7 @@ void startGame()
                 }
 
                 //Level finished
-                if (Level_2->getBall()->getScore() >= 20)//1980)
+                if (Level_2->getBall()->getScore() >= 100)//1980)
                 {
                     lvl_2_state = false;
                     lvl_3_state = true;
@@ -328,7 +328,7 @@ void startGame()
                 }
 
                 //Level finished
-                if (Level_3->getBall()->getScore() >= 50)//3420)
+                if (Level_3->getBall()->getScore() >= 200)//3420)
                 {
                     lvl_3_state = false;
                     gameWon = true;

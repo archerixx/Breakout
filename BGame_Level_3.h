@@ -12,7 +12,6 @@ public:
     BGame* getBall();
     BPlayerControl* getPlayer();
 
-    void updateLevel();
     void mainGameLoop(bool levelState);
     void standByLoop(bool levelState);
     void gameOverLoop();

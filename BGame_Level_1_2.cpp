@@ -10,6 +10,7 @@ BGame_Level_1_2::BGame_Level_1_2()
 
     tempScore = 0;
     tempLives = 0;
+    updateLenght = 20;
 }
 
 BGame_Level_1_2::~BGame_Level_1_2()
@@ -31,9 +32,9 @@ void BGame_Level_1_2::updateLevel()
 {
     for (int i = 0; i < gBall->getBrickLevel_1()->getLevel_1()->getColumnCount(); i++)
     {
-        gBall->getBrickLevel_1()->getSoftYellowBrick(i)->updateBrickBoarder_Y_axis(20);
-        gBall->getBrickLevel_1()->getMediumBlueBrick(i)->updateBrickBoarder_Y_axis(20);
-        gBall->getBrickLevel_1()->getHardRedBrick(i)->updateBrickBoarder_Y_axis(20);
+        gBall->getBrickLevel_1()->getSoftYellowBrick(i)->updateBrickBoarder_Y_axis(updateLenght);
+        gBall->getBrickLevel_1()->getMediumBlueBrick(i)->updateBrickBoarder_Y_axis(updateLenght);
+        gBall->getBrickLevel_1()->getHardRedBrick(i)->updateBrickBoarder_Y_axis(updateLenght);
     }
 }
 

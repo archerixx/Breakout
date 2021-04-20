@@ -13,8 +13,8 @@ public:
 
 	//SET functions for private variables
 	void setBrickTexturePath(const char* bTexture);
-	void setHitPoints(int bHitPoints);
-	void setBreakScore(int bScore);
+	void setHitPoints(const int& bHitPoints);
+	void setBreakScore(const int& bScore);
 
 	//GET function for private vraiables
 	const char* getBrickTexturePath() const;
@@ -22,27 +22,25 @@ public:
 	int getBreakScore() const;
 
 	//SET boarder element for X or Y axis
-	void setBrickBoarderOn_X_Element(int index, int element);
-	void setBrickBoarderOn_Y_Element(int index, int element);
+	void setBrickBoarderOn_X_Element(int& index, int& element);
+	void setBrickBoarderOn_Y_Element(int& index, int& element);
 
 	//GET boarder element on X/Y axis
-	int getBrickBoarderOn_X_Element(int element) const;
-	int getBrickBoarderOn_Y_Element(int element) const;
+	int getBrickBoarderOn_X_Element(const int& element) const;
+	int getBrickBoarderOn_Y_Element(const int& element) const;
 
 	//update/move bricks on y-axis
-	void updateBrickBoarder_Y_axis(int y);
+	void updateBrickBoarder_Y_axis(int& y);
 
 	//render bricks
-	void renderYellowBrick(int x, int y);
-	void renderBlueBrick(int x, int y);
-	void renderRedBrick(int x, int y);
-	void renderPurpleBrick(int x, int y);
+	void renderYellowBrick(const int& x,const int& y);
+	void renderBlueBrick(const int& x, const int& y);
+	void renderRedBrick(const int& x, const int& y);
 
 	//load media for bricks
 	bool loadYellowBrickMedia(const char* path);
 	bool loadBlueBrickMedia(const char* path);
 	bool loadRedBrickMedia(const char* path);
-	bool loadPurpleBrickMedia(const char* path);
 
 	//clear brick texture media
 	void clearYellowTexture();
@@ -65,6 +63,5 @@ private:
 	BTexture* BrickSoftYellowTexture;
 	BTexture* BrickMediumBlueTexture;
 	BTexture* BrickHardRedTexture;
-	BTexture* BrickImpenetrablePurpleTexture;
 };
 

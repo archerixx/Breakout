@@ -18,14 +18,14 @@ public:
 	void renderGameWon(int x = 0, int y = 0);
 
 	//set ball position
-	void setBallPoint(int x, int y);
+	void setBallPoint(const int& x, const int& y);
 	//get ball size
 	int getBallSize() const;
 
 	//load ball media
 	bool loadBallMedia();
 	//render ball
-	void renderBall(int x, int y);
+	void renderBall(const int& x, const int& y);
 
 	//get BBrick object
 	BBricks* getBrickLevel_1();
@@ -34,21 +34,20 @@ public:
 	BSound* getSound();
 
 	//set second level state
-	void setSecondLevelState(bool secondLevel);
-	void setupBricks(bool secondLevel);
+	void setupBricks(bool& secondLevel);
 
 	//responsible for ball movement, collision, brick destruction, gameScore and lives
-	void ballMovementAndCollision(int board_x, int board_y, bool levelState);
-	void brickCollision(int size, BBricks* getBrickLevel);
+	void ballMovementAndCollision(const int& board_x, const int& board_y, bool& levelState);
+	void brickCollision(const int& size, BBricks* getBrickLevel);
 	void stateReset();
 
 	//removes brick from gametable
-	void removeYellowBricks(int index, BBricks* getBrickLevel);
-	void removeBlueBricks(int index, BBricks* getBrickLevel);
-	void removeRedBricks(int index, BBricks* getBrickLevel);
+	void removeYellowBricks(int& index, BBricks* getBrickLevel);
+	void removeBlueBricks(int& index, BBricks* getBrickLevel);
+	void removeRedBricks(int& index, BBricks* getBrickLevel);
 
 	// SET/GET gameScore
-	void setScore(int addScore);
+	void setScore(const int& addScore);
 	int getScore();
 
 	//get hit counter
@@ -60,7 +59,7 @@ public:
 	BTexture* getLivesTexture();
 
 	//load font media for gameScore
-	bool loadScoreAndLivesMedia(int gameScore, int livesLeft);
+	bool loadScoreAndLivesMedia( const int& gameScore, const int& livesLeft);
 	BTexture* getScoreTexture();
 
 	//qualify function name from BGraphics class
@@ -85,6 +84,8 @@ private:
 	int brickHitCounter;
 	//life state
 	bool lifeLost;
+	//off map
+	int offMap = 650;
 
 	//text/font for score texture
 	BTexture* scoreTexture;
@@ -119,4 +120,6 @@ private:
 	bool onTopWallRight = false;
 	bool onRightWallBelow = false;
 	bool onRightWallAbove = false;
+
+	
 };

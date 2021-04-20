@@ -29,16 +29,6 @@ BPlayerControl* BGame_Level_3::getPlayer()
     return gPlayer;
 }
 
-void BGame_Level_3::updateLevel()
-{
-    for (int i = 0; i < gGame_Level_3->getBrickLevel_2()->getLevel_2()->getColumnCount(); i++)
-    {
-        gGame_Level_3->getBrickLevel_2()->getSoftYellowBrick(i)->updateBrickBoarder_Y_axis(20);
-        gGame_Level_3->getBrickLevel_2()->getMediumBlueBrick(i)->updateBrickBoarder_Y_axis(20);
-        gGame_Level_3->getBrickLevel_2()->getHardRedBrick(i)->updateBrickBoarder_Y_axis(20);
-    }
-}
-
 void BGame_Level_3::mainGameLoop(bool levelState)
 {
     //Clear screen

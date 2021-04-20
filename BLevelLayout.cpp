@@ -4,8 +4,8 @@ BLevelLayout::BLevelLayout()
 {
 	brickRowCount = 3;
 	brickColumnCount = 11;
-	brickRowSpacing = 5;
-	brickColumnSpacing = 5;
+	brickSpacing = 5;
+	brickSpacing = 5;
 	backgroundTexture = "Breakout_Media/retro_arcade_background.png";
 	ballLives = 3;
 }
@@ -14,8 +14,8 @@ BLevelLayout::BLevelLayout(int rowCount, int columnCount, int rowSpacing, int co
 {
 	this->brickRowCount = rowCount;
 	this->brickColumnCount = columnCount;
-	this->brickRowSpacing = rowSpacing;
-	this->brickColumnSpacing = columnSpacing;
+	this->brickSpacing = rowSpacing;
+	this->brickSpacing = columnSpacing;
 	this->backgroundTexture = backGroundTexture;
 	this->ballLives = ballLives;
 }
@@ -23,21 +23,13 @@ BLevelLayout::BLevelLayout(int rowCount, int columnCount, int rowSpacing, int co
 /*
 	GETs
 */
-int BLevelLayout::getRowCount() const
-{
-	return brickRowCount;
-}
 int BLevelLayout::getColumnCount() const
 {
 	return brickColumnCount;
 }
-int BLevelLayout::getRowSpacing() const
+int BLevelLayout::getBrickSpacing() const
 {
-	return brickRowSpacing;
-}
-int BLevelLayout::getColumtSpacing() const
-{
-	return brickColumnSpacing;
+	return brickSpacing;
 }
 const char* BLevelLayout::getBackGroundTexture() const
 {
@@ -51,26 +43,6 @@ int BLevelLayout::getBallLives() const
 /*
 	SETs
 */
-void BLevelLayout::setBrickRowCount(int rowCount)
-{
-	this->brickRowCount = rowCount;
-}
-void BLevelLayout::setBrickColumnCount(int columnCount)
-{
-	this->brickColumnCount = columnCount;
-}
-void BLevelLayout::setBrickRowSpacing(int rowSpacing)
-{
-	this->brickRowSpacing = rowSpacing;
-}
-void BLevelLayout::setbrickColumnSpacing(int columnSpacing)
-{
-	this->brickColumnSpacing = columnSpacing;
-}
-void BLevelLayout::setBackgroundTexture(const char* backgroundTexture)
-{
-	this->backgroundTexture = backgroundTexture;
-}
 void BLevelLayout::setBallLives(int lifesLeft)
 {
 	this->ballLives = lifesLeft;

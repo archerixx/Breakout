@@ -30,6 +30,8 @@ private:
     bool start;
     //Gameover flag
     bool gameOver;
+    //Update/move lenght on y-axis
+    int updateLenght;
 
     //temp values for score and lives
     int tempScore;

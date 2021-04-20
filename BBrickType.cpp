@@ -9,7 +9,6 @@ BBrickType::BBrickType()
 	BrickSoftYellowTexture = new BTexture;
 	BrickMediumBlueTexture = new BTexture;
 	BrickHardRedTexture = new BTexture;
-	BrickImpenetrablePurpleTexture = new BTexture;
 }
 BBrickType::~BBrickType()
 {
@@ -31,11 +30,11 @@ void BBrickType::setBrickTexturePath(const char* bTexture)
 {
 	this->brickTexturePath = bTexture;
 }
-void BBrickType::setHitPoints(int bHitPoints)
+void BBrickType::setHitPoints(const int& bHitPoints)
 {
 	this->hitPoints = bHitPoints;
 }
-void BBrickType::setBreakScore(int bScore)
+void BBrickType::setBreakScore(const int& bScore)
 {
 	this->breakScore = bScore;
 }
@@ -59,11 +58,11 @@ int BBrickType::getBreakScore() const
 /*
 	SET brick boarder element
 */
-void BBrickType::setBrickBoarderOn_X_Element(int index, int element)
+void BBrickType::setBrickBoarderOn_X_Element(int& index, int& element)
 {
 	BrickBoarderOn_X[index] = element;
 }
-void BBrickType::setBrickBoarderOn_Y_Element(int index, int element)
+void BBrickType::setBrickBoarderOn_Y_Element(int& index, int& element)
 {
 	BrickBoarderOn_Y[index] = element;
 }
@@ -71,17 +70,17 @@ void BBrickType::setBrickBoarderOn_Y_Element(int index, int element)
 /*
 	GET brick boarder element
 */
-int BBrickType::getBrickBoarderOn_X_Element(int element) const
+int BBrickType::getBrickBoarderOn_X_Element(const int& element) const
 {
 	return BrickBoarderOn_X[element];
 }
-int BBrickType::getBrickBoarderOn_Y_Element(int element) const
+int BBrickType::getBrickBoarderOn_Y_Element(const int& element) const
 {
 	return BrickBoarderOn_Y[element];
 }
 
 //Update/moved brick on Y axis
-void BBrickType::updateBrickBoarder_Y_axis(int y)
+void BBrickType::updateBrickBoarder_Y_axis(int& y)
 {
 	BrickBoarderOn_Y[0] += y;
 	BrickBoarderOn_Y[1] += y;
@@ -90,22 +89,17 @@ void BBrickType::updateBrickBoarder_Y_axis(int y)
 /*
 	Render bricks
 */
-void BBrickType::renderYellowBrick(int x, int y)
+void BBrickType::renderYellowBrick(const int& x, const int& y)
 {
 	BrickSoftYellowTexture->renderTexture(x, y);
 }
-void BBrickType::renderBlueBrick(int x, int y)
+void BBrickType::renderBlueBrick(const int& x, const int& y)
 {
 	BrickMediumBlueTexture->renderTexture(x, y);
 }
-void BBrickType::renderRedBrick(int x, int y)
+void BBrickType::renderRedBrick(const int& x, const int& y)
 {
 	BrickHardRedTexture->renderTexture(x, y);
-}
-
-void BBrickType::renderPurpleBrick(int x, int y)
-{
-	BrickImpenetrablePurpleTexture->renderTexture(x, y);
 }
 
 /*
@@ -145,20 +139,6 @@ bool BBrickType::loadRedBrickMedia(const char* path)
 	if (!BrickHardRedTexture->loadFromFile(path))
 	{
 		std::cout << "Failed to load Red Brick texture!\n";
-		success = false;
-	}
-
-	return success;
-}
-
-bool BBrickType::loadPurpleBrickMedia(const char* path)
-{
-	//Loading success flag
-	bool success = true;
-
-	if (!BrickImpenetrablePurpleTexture->loadFromFile(path))
-	{
-		std::cout << "Failed to load Purple Brick texture!\n";
 		success = false;
 	}
 
