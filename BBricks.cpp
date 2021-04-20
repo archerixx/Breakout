@@ -69,8 +69,6 @@ BBricks::~BBricks()
         }
         delete[] BrickHardRed;
 
-        //add purple
-
         delete Level_1;
         Level_1 = NULL;
         delete Level_2;

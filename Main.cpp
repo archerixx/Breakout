@@ -158,7 +158,7 @@ void startGame()
                 }
 
                 //Level finished
-                if (Level_1->getGame()->getScore() == 20)//maxScore_Level_1)
+                if (Level_1->getGame()->getScore() == maxScore_Level_1)
                 {
                     lvl_1_state = false;
                     lvl_2_state = true;

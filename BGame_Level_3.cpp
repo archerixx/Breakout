@@ -10,8 +10,6 @@ BGame_Level_3::BGame_Level_3()
 
     tempScore = 0;
     tempLives = 0;
-    //gGame->getBrickLevel_2()->setPurpleBrick();
-
 }
 
 BGame_Level_3::~BGame_Level_3()
