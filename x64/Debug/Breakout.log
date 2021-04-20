@@ -1,0 +1,13 @@
+﻿  Source.cpp
+  BTexture.cpp
+  BSound.cpp
+  BPlayerControl.cpp
+  BLevelLayout.cpp
+  BGraphics.cpp
+  BGame_Level_3.cpp
+  BGame_Level_1_2.cpp
+  BGame.cpp
+  BBrickType.cpp
+  BBricks.cpp
+  Generating Code...
+  Breakout.vcxproj -> C:\Users\tursi\OneDrive\Documents\Breakout\Breakout\Breakout\x64\Debug\Breakout.exe

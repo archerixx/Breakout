@@ -1,0 +1,90 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="Source Files\Headers">
+      <UniqueIdentifier>{eaa9c48d-5c8b-465b-b1f8-873097d10f70}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Header Source Files">
+      <UniqueIdentifier>{fe52a368-aac2-4608-b722-4823ef2246cc}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Source.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="BTexture.cpp">
+      <Filter>Source Files\Header Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="BSound.cpp">
+      <Filter>Source Files\Header Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="BPlayerControl.cpp">
+      <Filter>Source Files\Header Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="BLevelLayout.cpp">
+      <Filter>Source Files\Header Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="BGraphics.cpp">
+      <Filter>Source Files\Header Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="BGame_Level_3.cpp">
+      <Filter>Source Files\Header Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="BGame_Level_1_2.cpp">
+      <Filter>Source Files\Header Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="BGame.cpp">
+      <Filter>Source Files\Header Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="BBrickType.cpp">
+      <Filter>Source Files\Header Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="BBricks.cpp">
+      <Filter>Source Files\Header Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="BTexture.h">
+      <Filter>Source Files\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="BSound.h">
+      <Filter>Source Files\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="BPlayerControl.h">
+      <Filter>Source Files\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="BLevelLayout.h">
+      <Filter>Source Files\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="BGraphics.h">
+      <Filter>Source Files\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="BGame_Level_3.h">
+      <Filter>Source Files\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="BGame_Level_1_2.h">
+      <Filter>Source Files\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="BGame.h">
+      <Filter>Source Files\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="BBrickType.h">
+      <Filter>Source Files\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="BBricks.h">
+      <Filter>Source Files\Headers</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>
