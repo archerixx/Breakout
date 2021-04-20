@@ -9,20 +9,26 @@ public:
     BGame_Level_3();
     ~BGame_Level_3();
 
-    BGame* getBall();
+    BGame* getGame();
     BPlayerControl* getPlayer();
 
-    void mainGameLoop(bool levelState);
-    void standByLoop(bool levelState);
+    //main game loop
+    void mainGameLoop(bool& levelState);
+    //standby mode
+    void standByLoop();
+    //game over screen
     void gameOverLoop();
 
+    //GETs
     int getGameScorePosition_X() const;
     int getGameLivesPosition_X() const;
     int getScoreAndLivesPosition_Y() const;
 
+    //checks if mouse button is clicked
     void setGameStart(bool state);
-    bool getGameStart();
 
+    //GETs
+    bool getGameStart();
     bool getGameOver();
 private:
     BGame* gGame_Level_3;

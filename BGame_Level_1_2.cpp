@@ -2,7 +2,7 @@
 
 BGame_Level_1_2::BGame_Level_1_2()
 {
-    gBall = new BGame;
+    gGame = new BGame;
     gPlayer = new BPlayerControl;
 
     start = false;
@@ -15,12 +15,12 @@ BGame_Level_1_2::BGame_Level_1_2()
 
 BGame_Level_1_2::~BGame_Level_1_2()
 {
-    delete gBall;
+    delete gGame;
     delete gPlayer;
 }
-BGame* BGame_Level_1_2::getBall()
+BGame* BGame_Level_1_2::getGame()
 {
-    return gBall;
+    return gGame;
 }
 
 BPlayerControl* BGame_Level_1_2::getPlayer()
@@ -30,61 +30,61 @@ BPlayerControl* BGame_Level_1_2::getPlayer()
 
 void BGame_Level_1_2::updateLevel()
 {
-    for (int i = 0; i < gBall->getBrickLevel_1()->getLevel_1()->getColumnCount(); i++)
+    for (int i = 0; i < gGame->getBrickLevel_1()->getLevel_1()->getColumnCount(); i++)
     {
-        gBall->getBrickLevel_1()->getSoftYellowBrick(i)->updateBrickBoarder_Y_axis(updateLenght);
-        gBall->getBrickLevel_1()->getMediumBlueBrick(i)->updateBrickBoarder_Y_axis(updateLenght);
-        gBall->getBrickLevel_1()->getHardRedBrick(i)->updateBrickBoarder_Y_axis(updateLenght);
+        gGame->getBrickLevel_1()->getSoftYellowBrick(i)->updateBrickBoarder_Y_axis(updateLenght);
+        gGame->getBrickLevel_1()->getMediumBlueBrick(i)->updateBrickBoarder_Y_axis(updateLenght);
+        gGame->getBrickLevel_1()->getHardRedBrick(i)->updateBrickBoarder_Y_axis(updateLenght);
     }
 }
 
-void BGame_Level_1_2::mainGameLoop(bool levelState)
+void BGame_Level_1_2::mainGameLoop(bool& levelState)
 {
     //Clear screen
-    //SDL_SetRenderDrawColor(baseRenderer, 255, 255, 255, 255);
+    SDL_SetRenderDrawColor(baseRenderer, 255, 255, 255, 255);
     SDL_RenderClear(baseRenderer);
 
     //Render background texture to screen
-    gBall->renderBackground();
+    gGame->renderBackground();
 
     //render bricks from level
-    for (int i = 0; i < gBall->getBrickLevel_1()->getLevel_1()->getColumnCount(); i++)
+    for (int i = 0; i < gGame->getBrickLevel_1()->getLevel_1()->getColumnCount(); i++)
     {
-        gBall->getBrickLevel_1()->getSoftYellowBrick(i)->renderYellowBrick(gBall->getBrickLevel_1()->getSoftYellowBrick(i)->getBrickBoarderOn_X_Element(0), gBall->getBrickLevel_1()->getSoftYellowBrick(i)->getBrickBoarderOn_Y_Element(0));
-        gBall->getBrickLevel_1()->getMediumBlueBrick(i)->renderBlueBrick(gBall->getBrickLevel_1()->getMediumBlueBrick(i)->getBrickBoarderOn_X_Element(0), gBall->getBrickLevel_1()->getMediumBlueBrick(i)->getBrickBoarderOn_Y_Element(0));
-        gBall->getBrickLevel_1()->getHardRedBrick(i)->renderRedBrick(gBall->getBrickLevel_1()->getHardRedBrick(i)->getBrickBoarderOn_X_Element(0), gBall->getBrickLevel_1()->getHardRedBrick(i)->getBrickBoarderOn_Y_Element(0));
+        gGame->getBrickLevel_1()->getSoftYellowBrick(i)->renderYellowBrick(gGame->getBrickLevel_1()->getSoftYellowBrick(i)->getBrickBoarderOn_X_Element(0), gGame->getBrickLevel_1()->getSoftYellowBrick(i)->getBrickBoarderOn_Y_Element(0));
+        gGame->getBrickLevel_1()->getMediumBlueBrick(i)->renderBlueBrick(gGame->getBrickLevel_1()->getMediumBlueBrick(i)->getBrickBoarderOn_X_Element(0), gGame->getBrickLevel_1()->getMediumBlueBrick(i)->getBrickBoarderOn_Y_Element(0));
+        gGame->getBrickLevel_1()->getHardRedBrick(i)->renderRedBrick(gGame->getBrickLevel_1()->getHardRedBrick(i)->getBrickBoarderOn_X_Element(0), gGame->getBrickLevel_1()->getHardRedBrick(i)->getBrickBoarderOn_Y_Element(0));
     }
 
     //keep previous score
-    tempScore = gBall->getScore();
-    tempLives = gBall->getBrickLevel_1()->getLevel_1()->getBallLives();
+    tempScore = gGame->getScore();
+    tempLives = gGame->getBrickLevel_1()->getLevel_1()->getBallLives();
 
     //ball movement/collision
-    gBall->ballMovementAndCollision(gPlayer->getBoardPosition().x, gPlayer->getBoardPosition().y, levelState);
+    gGame->ballMovementAndCollision(gPlayer->getBoardPosition().x, gPlayer->getBoardPosition().y, levelState);
 
     //checks if it is game over
-    if (gBall->getBrickLevel_1()->getLevel_1()->getBallLives() == 0)
+    if (gGame->getBrickLevel_1()->getLevel_1()->getBallLives() == 0)
     {
         gameOver = true;
         //load last score and number of lives
-        if (gBall->getScore() > tempScore || gBall->getBrickLevel_1()->getLevel_1()->getBallLives() < tempLives)
+        if (gGame->getScore() > tempScore || gGame->getBrickLevel_1()->getLevel_1()->getBallLives() < tempLives)
         {
-            gBall->loadScoreAndLivesMedia(gBall->getScore(), gBall->getBrickLevel_1()->getLevel_1()->getBallLives());
+            gGame->loadScoreAndLivesMedia(gGame->getScore(), gGame->getBrickLevel_1()->getLevel_1()->getBallLives());
         }
     }
     //if game is not lost, reset ball on board and wait for mouse click
-    else if (gBall->getLifeLostState() == true)
+    else if (gGame->getLifeLostState() == true)
     {
         start = false;
     }
 
     //if score is changed, load and render it on screen
-    if (gBall->getScore() > tempScore || gBall->getBrickLevel_1()->getLevel_1()->getBallLives() < tempLives)
+    if (gGame->getScore() > tempScore || gGame->getBrickLevel_1()->getLevel_1()->getBallLives() < tempLives)
     {
-        gBall->loadScoreAndLivesMedia(gBall->getScore(), gBall->getBrickLevel_1()->getLevel_1()->getBallLives());
+        gGame->loadScoreAndLivesMedia(gGame->getScore(), gGame->getBrickLevel_1()->getLevel_1()->getBallLives());
     }
-    gBall->getScoreTexture()->renderTexture(GAME_SCORE_POSITION_X, GAME_SCORE_AND_LIVES_POSITION_Y);
-    gBall->getLivesTexture()->renderTexture(GAME_LIVES_POSITION_X, GAME_SCORE_AND_LIVES_POSITION_Y);
+    gGame->getScoreTexture()->renderTexture(GAME_SCORE_POSITION_X, GAME_SCORE_AND_LIVES_POSITION_Y);
+    gGame->getLivesTexture()->renderTexture(GAME_LIVES_POSITION_X, GAME_SCORE_AND_LIVES_POSITION_Y);
 
 
     //game delay, speed
@@ -104,27 +104,27 @@ void BGame_Level_1_2::standByLoop()
     SDL_RenderClear(baseRenderer);
 
     //Render background texture to screen
-    gBall->renderBackground();
-    gBall->renderMenu();
+    gGame->renderBackground();
+    gGame->renderMenu();
 
     //render bricks from level
-    for (int i = 0; i < gBall->getBrickLevel_1()->getLevel_1()->getColumnCount(); i++)
+    for (int i = 0; i < gGame->getBrickLevel_1()->getLevel_1()->getColumnCount(); i++)
     {
-        gBall->getBrickLevel_1()->getSoftYellowBrick(i)->renderYellowBrick(gBall->getBrickLevel_1()->getSoftYellowBrick(i)->getBrickBoarderOn_X_Element(0), gBall->getBrickLevel_1()->getSoftYellowBrick(i)->getBrickBoarderOn_Y_Element(0));
-        gBall->getBrickLevel_1()->getMediumBlueBrick(i)->renderBlueBrick(gBall->getBrickLevel_1()->getMediumBlueBrick(i)->getBrickBoarderOn_X_Element(0), gBall->getBrickLevel_1()->getMediumBlueBrick(i)->getBrickBoarderOn_Y_Element(0));
-        gBall->getBrickLevel_1()->getHardRedBrick(i)->renderRedBrick(gBall->getBrickLevel_1()->getHardRedBrick(i)->getBrickBoarderOn_X_Element(0), gBall->getBrickLevel_1()->getHardRedBrick(i)->getBrickBoarderOn_Y_Element(0));
+        gGame->getBrickLevel_1()->getSoftYellowBrick(i)->renderYellowBrick(gGame->getBrickLevel_1()->getSoftYellowBrick(i)->getBrickBoarderOn_X_Element(0), gGame->getBrickLevel_1()->getSoftYellowBrick(i)->getBrickBoarderOn_Y_Element(0));
+        gGame->getBrickLevel_1()->getMediumBlueBrick(i)->renderBlueBrick(gGame->getBrickLevel_1()->getMediumBlueBrick(i)->getBrickBoarderOn_X_Element(0), gGame->getBrickLevel_1()->getMediumBlueBrick(i)->getBrickBoarderOn_Y_Element(0));
+        gGame->getBrickLevel_1()->getHardRedBrick(i)->renderRedBrick(gGame->getBrickLevel_1()->getHardRedBrick(i)->getBrickBoarderOn_X_Element(0), gGame->getBrickLevel_1()->getHardRedBrick(i)->getBrickBoarderOn_Y_Element(0));
     }
 
     //render ball on board
-    gBall->setBallPoint(gPlayer->getBoardPosition().x + gBall->getBoardWidth() / 2, gPlayer->getBoardPosition().y - gBall->getBallSize());
-    gBall->renderBall(gPlayer->getBoardPosition().x + gBall->getBoardWidth() / 2, gPlayer->getBoardPosition().y - gBall->getBallSize());
+    gGame->setBallPoint(gPlayer->getBoardPosition().x + gGame->getBoardWidth() / 2, gPlayer->getBoardPosition().y - gGame->getBallSize());
+    gGame->renderBall(gPlayer->getBoardPosition().x + gGame->getBoardWidth() / 2, gPlayer->getBoardPosition().y - gGame->getBallSize());
 
     //Render player board
     gPlayer->renderPlayerBoard();
 
     //Render current frame
-    gBall->getScoreTexture()->renderTexture(GAME_SCORE_POSITION_X, GAME_SCORE_AND_LIVES_POSITION_Y);
-    gBall->getLivesTexture()->renderTexture(GAME_LIVES_POSITION_X, GAME_SCORE_AND_LIVES_POSITION_Y);
+    gGame->getScoreTexture()->renderTexture(GAME_SCORE_POSITION_X, GAME_SCORE_AND_LIVES_POSITION_Y);
+    gGame->getLivesTexture()->renderTexture(GAME_LIVES_POSITION_X, GAME_SCORE_AND_LIVES_POSITION_Y);
 
     //Update screen
     SDL_RenderPresent(baseRenderer);
@@ -137,9 +137,9 @@ void BGame_Level_1_2::gameOverLoop()
     SDL_RenderClear(baseRenderer);
 
     //Render background texture to screen
-    gBall->renderGameOverBackground();
-    gBall->getScoreTexture()->renderTexture(GAME_SCORE_POSITION_X, GAME_SCORE_AND_LIVES_POSITION_Y);
-    gBall->getLivesTexture()->renderTexture(GAME_LIVES_POSITION_X, GAME_SCORE_AND_LIVES_POSITION_Y);
+    gGame->renderGameOverBackground();
+    gGame->getScoreTexture()->renderTexture(GAME_SCORE_POSITION_X, GAME_SCORE_AND_LIVES_POSITION_Y);
+    gGame->getLivesTexture()->renderTexture(GAME_LIVES_POSITION_X, GAME_SCORE_AND_LIVES_POSITION_Y);
 
     //Update screen
     SDL_RenderPresent(baseRenderer);

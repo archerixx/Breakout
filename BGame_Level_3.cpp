@@ -16,10 +16,10 @@ BGame_Level_3::BGame_Level_3()
 
 BGame_Level_3::~BGame_Level_3()
 {
-    //delete gGame_Level_3;
+    delete gGame_Level_3;
     delete gPlayer;
 }
-BGame* BGame_Level_3::getBall()
+BGame* BGame_Level_3::getGame()
 {
     return gGame_Level_3;
 }
@@ -29,7 +29,7 @@ BPlayerControl* BGame_Level_3::getPlayer()
     return gPlayer;
 }
 
-void BGame_Level_3::mainGameLoop(bool levelState)
+void BGame_Level_3::mainGameLoop(bool& levelState)
 {
     //Clear screen
     SDL_SetRenderDrawColor(baseRenderer, 255, 255, 255, 255);
@@ -88,7 +88,7 @@ void BGame_Level_3::mainGameLoop(bool levelState)
     SDL_RenderPresent(baseRenderer);
 }
 
-void BGame_Level_3::standByLoop(bool levelState)
+void BGame_Level_3::standByLoop()
 {
     //Clear screen
     SDL_SetRenderDrawColor(baseRenderer, 255, 255, 255, 255);
@@ -101,7 +101,6 @@ void BGame_Level_3::standByLoop(bool levelState)
     //render bricks from level
     for (int i = 0; i < gGame_Level_3->getBrickLevel_2()->getLevel_2()->getColumnCount(); i++)
     {
-
         gGame_Level_3->getBrickLevel_2()->getSoftYellowBrick(i)->renderYellowBrick(gGame_Level_3->getBrickLevel_2()->getSoftYellowBrick(i)->getBrickBoarderOn_X_Element(0), gGame_Level_3->getBrickLevel_2()->getSoftYellowBrick(i)->getBrickBoarderOn_Y_Element(0));
         gGame_Level_3->getBrickLevel_2()->getMediumBlueBrick(i)->renderBlueBrick(gGame_Level_3->getBrickLevel_2()->getMediumBlueBrick(i)->getBrickBoarderOn_X_Element(0), gGame_Level_3->getBrickLevel_2()->getMediumBlueBrick(i)->getBrickBoarderOn_Y_Element(0));
         gGame_Level_3->getBrickLevel_2()->getHardRedBrick(i)->renderRedBrick(gGame_Level_3->getBrickLevel_2()->getHardRedBrick(i)->getBrickBoarderOn_X_Element(0), gGame_Level_3->getBrickLevel_2()->getHardRedBrick(i)->getBrickBoarderOn_Y_Element(0));

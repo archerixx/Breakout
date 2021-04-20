@@ -103,6 +103,10 @@ void startGame()
         int passTheScore = 0;
         //lives passed between levels
         int passLives = 0;
+        //max score
+        int maxScore_Level_1 = 990;
+        int maxScore_Level_2 = 1980;
+        int maxScore_Level_3 = 3420;
 
         //game won flag
         bool gameWon = false;
@@ -114,7 +118,7 @@ void startGame()
 
         //Create Level 1
         BGame_Level_1_2* Level_1 = new BGame_Level_1_2;
-        Level_1->getBall()->setupBricks(lvl_2_state);
+        Level_1->getGame()->setupBricks(lvl_2_state);
         if (lvl_1_state)
         {
             while (!quit)
@@ -133,7 +137,7 @@ void startGame()
                     Level_1->getPlayer()->handleEvent(&e);
 
                     //Enable music with key 9 (to play/pause) and 0 (to stop)
-                    Level_1->getBall()->getSound()->handleMusicEvent(&e);
+                    Level_1->getGame()->getSound()->handleMusicEvent(&e);
 
                     //start game with mouse click
                     if (e.type == SDL_MOUSEBUTTONUP)
@@ -154,12 +158,12 @@ void startGame()
                 }
 
                 //Level finished
-                if (Level_1->getBall()->getScore() >= 50)
+                if (Level_1->getGame()->getScore() == 20)//maxScore_Level_1)
                 {
                     lvl_1_state = false;
                     lvl_2_state = true;
-                    passTheScore = Level_1->getBall()->getScore();
-                    passLives = Level_1->getBall()->getBrickLevel_1()->getLevel_1()->getBallLives();
+                    passTheScore = Level_1->getGame()->getScore();
+                    passLives = Level_1->getGame()->getBrickLevel_1()->getLevel_1()->getBallLives();
                     break;
                 }
 
@@ -189,13 +193,13 @@ void startGame()
 
         //create Level 2
         BGame_Level_1_2* Level_2 = new BGame_Level_1_2;
-        Level_2->getBall()->setupBricks(lvl_2_state);
+        Level_2->getGame()->setupBricks(lvl_2_state);
         //pass the previous score
-        Level_2->getBall()->setScore(passTheScore);
+        Level_2->getGame()->setScore(passTheScore);
         //pass lives that were left
-        Level_2->getBall()->getBrickLevel_1()->getLevel_1()->setBallLives(passLives);
+        Level_2->getGame()->getBrickLevel_1()->getLevel_1()->setBallLives(passLives);
         //load score media
-        Level_2->getBall()->loadScoreAndLivesMedia(Level_2->getBall()->getScore(), Level_2->getBall()->getBrickLevel_1()->getLevel_1()->getBallLives());
+        Level_2->getGame()->loadScoreAndLivesMedia(Level_2->getGame()->getScore(), Level_2->getGame()->getBrickLevel_1()->getLevel_1()->getBallLives());
         //update level with dropping bricks on every fifth board hit
         bool updateLevel_2 = false;
         if (lvl_2_state)
@@ -216,7 +220,7 @@ void startGame()
                     Level_2->getPlayer()->handleEvent(&e);
 
                     //Enable music with key 9 (to play/pause) and 0 (to stop)
-                    Level_2->getBall()->getSound()->handleMusicEvent(&e);
+                    Level_2->getGame()->getSound()->handleMusicEvent(&e);
 
                     //start game with mouse click
                     if (e.type == SDL_MOUSEBUTTONUP)
@@ -237,10 +241,10 @@ void startGame()
                 }
 
                 //Reset hit counter when ball hits board 5 times
-                if (Level_2->getBall()->getHitCounter() == 5)
+                if (Level_2->getGame()->getHitCounter() == 5)
                 {
                     updateLevel_2 = true;
-                    Level_2->getBall()->updateHitCounter();
+                    Level_2->getGame()->updateHitCounter();
                 }
 
                 //Update level, move bricks down
@@ -251,12 +255,12 @@ void startGame()
                 }
 
                 //Level finished
-                if (Level_2->getBall()->getScore() >= 100)//1980)
+                if (Level_2->getGame()->getScore() == maxScore_Level_2)
                 {
                     lvl_2_state = false;
                     lvl_3_state = true;
-                    passTheScore = Level_2->getBall()->getScore();
-                    passLives = Level_2->getBall()->getBrickLevel_1()->getLevel_1()->getBallLives();
+                    passTheScore = Level_2->getGame()->getScore();
+                    passLives = Level_2->getGame()->getBrickLevel_1()->getLevel_1()->getBallLives();
                     break;
                 }
 
@@ -286,9 +290,9 @@ void startGame()
 
         //create Level 3 
         BGame_Level_3* Level_3 = new BGame_Level_3;
-        Level_3->getBall()->setScore(passTheScore);
-        Level_3->getBall()->getBrickLevel_2()->getLevel_2()->setBallLives(passLives);
-        Level_3->getBall()->loadScoreAndLivesMedia(Level_3->getBall()->getScore(), Level_3->getBall()->getBrickLevel_2()->getLevel_2()->getBallLives());
+        Level_3->getGame()->setScore(passTheScore);
+        Level_3->getGame()->getBrickLevel_2()->getLevel_2()->setBallLives(passLives);
+        Level_3->getGame()->loadScoreAndLivesMedia(Level_3->getGame()->getScore(), Level_3->getGame()->getBrickLevel_2()->getLevel_2()->getBallLives());
         if (lvl_3_state)
         {
             while (!quit)
@@ -307,7 +311,7 @@ void startGame()
                     Level_3->getPlayer()->handleEvent(&e);
 
                     //Enable music with key 9 (to play/pause) and 0 (to stop)
-                    Level_3->getBall()->getSound()->handleMusicEvent(&e);
+                    Level_3->getGame()->getSound()->handleMusicEvent(&e);
 
                     //start game with mouse click
                     if (e.type == SDL_MOUSEBUTTONUP)
@@ -324,16 +328,16 @@ void startGame()
                 //wait for mouse click screen
                 else
                 {
-                    Level_3->standByLoop(lvl_3_state);
+                    Level_3->standByLoop();
                 }
 
                 //Level finished
-                if (Level_3->getBall()->getScore() >= 200)//3420)
+                if (Level_3->getGame()->getScore() >= maxScore_Level_3)
                 {
                     lvl_3_state = false;
                     gameWon = true;
-                    passTheScore = Level_3->getBall()->getScore();
-                    passLives = Level_3->getBall()->getBrickLevel_2()->getLevel_2()->getBallLives();
+                    passTheScore = Level_3->getGame()->getScore();
+                    passLives = Level_3->getGame()->getBrickLevel_2()->getLevel_2()->getBallLives();
                     break;
                 }
 
@@ -379,9 +383,9 @@ void startGame()
                 SDL_RenderClear(baseRenderer);
 
                 //Render background texture to screen
-                Level_3->getBall()->renderGameWon();
-                Level_3->getBall()->getScoreTexture()->renderTexture(730, 530);
-                Level_3->getBall()->getLivesTexture()->renderTexture(50, 530);
+                Level_3->getGame()->renderGameWon();
+                Level_3->getGame()->getScoreTexture()->renderTexture(Level_3->getGameScorePosition_X(), Level_3->getScoreAndLivesPosition_Y());
+                Level_3->getGame()->getLivesTexture()->renderTexture(Level_3->getGameLivesPosition_X(), Level_3->getScoreAndLivesPosition_Y());
 
                 //Update screen
                 SDL_RenderPresent(baseRenderer);

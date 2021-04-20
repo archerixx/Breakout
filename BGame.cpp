@@ -449,7 +449,7 @@ void BGame::brickCollision(const int& size, BBricks* getBrickLevel)
 				if ((bBallPosition.x + BALL_SIZE) > getBrickLevel->getSoftYellowBrick(i)->getBrickBoarderOn_X_Element(0) &&
 					(bBallPosition.x + BALL_SIZE) <= (getBrickLevel->getSoftYellowBrick(i)->getBrickBoarderOn_X_Element(0) + 1) &&
 					bBallPosition.y < (getBrickLevel->getSoftYellowBrick(i)->getBrickBoarderOn_Y_Element(1) - 1) &&
-					(bBallPosition.y + BALL_SIZE) >(getBrickLevel->getSoftYellowBrick(i)->getBrickBoarderOn_Y_Element(0) + 1))
+					(bBallPosition.y + BALL_SIZE) > (getBrickLevel->getSoftYellowBrick(i)->getBrickBoarderOn_Y_Element(0) + 1))
 				{
 					//checks if ball came from above
 					if (bBallPosition.y > bBallPreviousPosition.y)
@@ -553,7 +553,9 @@ void BGame::brickCollision(const int& size, BBricks* getBrickLevel)
 			{
 				//check speed
 				if ((bBallPosition.x + BALL_SIZE) > getBrickLevel->getMediumBlueBrick(i)->getBrickBoarderOn_X_Element(0) &&
-					(bBallPosition.x + BALL_SIZE) <= (getBrickLevel->getMediumBlueBrick(i)->getBrickBoarderOn_X_Element(0) + 1))
+					(bBallPosition.x + BALL_SIZE) <= (getBrickLevel->getMediumBlueBrick(i)->getBrickBoarderOn_X_Element(0) + 1) &&
+					bBallPosition.y < (getBrickLevel->getMediumBlueBrick(i)->getBrickBoarderOn_Y_Element(1) - 1) &&
+					(bBallPosition.y + BALL_SIZE) >(getBrickLevel->getMediumBlueBrick(i)->getBrickBoarderOn_Y_Element(0) + 1))
 				{
 					//checks if ball came from above
 					if (bBallPosition.y > bBallPreviousPosition.y)
@@ -578,7 +580,9 @@ void BGame::brickCollision(const int& size, BBricks* getBrickLevel)
 			{
 				//check speed
 				if (bBallPosition.x < getBrickLevel->getMediumBlueBrick(i)->getBrickBoarderOn_X_Element(1) &&
-					bBallPosition.x >= (getBrickLevel->getMediumBlueBrick(i)->getBrickBoarderOn_X_Element(1) - 1))
+					bBallPosition.x >= (getBrickLevel->getMediumBlueBrick(i)->getBrickBoarderOn_X_Element(1) - 1) &&
+					bBallPosition.y < (getBrickLevel->getMediumBlueBrick(i)->getBrickBoarderOn_Y_Element(1) - 1) &&
+					(bBallPosition.y + BALL_SIZE) >(getBrickLevel->getMediumBlueBrick(i)->getBrickBoarderOn_Y_Element(0) + 1))
 				{
 					//checks if ball came from above
 					if (bBallPosition.y > bBallPreviousPosition.y)
@@ -655,7 +659,9 @@ void BGame::brickCollision(const int& size, BBricks* getBrickLevel)
 			{
 				//check speed
 				if ((bBallPosition.x + BALL_SIZE) > getBrickLevel->getHardRedBrick(i)->getBrickBoarderOn_X_Element(0) &&
-					(bBallPosition.x + BALL_SIZE) <= (getBrickLevel->getHardRedBrick(i)->getBrickBoarderOn_X_Element(0) + 1))
+					(bBallPosition.x + BALL_SIZE) <= (getBrickLevel->getHardRedBrick(i)->getBrickBoarderOn_X_Element(0) + 1) &&
+					bBallPosition.y < (getBrickLevel->getHardRedBrick(i)->getBrickBoarderOn_Y_Element(1) - 1) &&
+					(bBallPosition.y + BALL_SIZE) >(getBrickLevel->getHardRedBrick(i)->getBrickBoarderOn_Y_Element(0) + 1))
 				{
 					//checks if ball came from above
 					if (bBallPosition.y > bBallPreviousPosition.y)
@@ -680,7 +686,9 @@ void BGame::brickCollision(const int& size, BBricks* getBrickLevel)
 			{
 				//check speed
 				if (bBallPosition.x < getBrickLevel->getHardRedBrick(i)->getBrickBoarderOn_X_Element(1) &&
-					bBallPosition.x >= (getBrickLevel->getHardRedBrick(i)->getBrickBoarderOn_X_Element(1) - 1))
+					bBallPosition.x >= (getBrickLevel->getHardRedBrick(i)->getBrickBoarderOn_X_Element(1) - 1) &&
+					bBallPosition.y < (getBrickLevel->getHardRedBrick(i)->getBrickBoarderOn_Y_Element(1) - 1) &&
+					(bBallPosition.y + BALL_SIZE) >(getBrickLevel->getHardRedBrick(i)->getBrickBoarderOn_Y_Element(0) + 1))
 				{
 					//checks if ball came from above
 					if (bBallPosition.y > bBallPreviousPosition.y)
